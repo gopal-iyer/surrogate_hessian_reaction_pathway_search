@@ -1,12 +1,3 @@
-Note to @GRI:
-On Oscar:
-- Use 'loadase' to load the environment to be able to use ASE-only
-  functionalities
-- Use 'loadslurm22qmcpack' followed by 'source ~/surhes_extra/bin/activate' to
-  use surrogate Hessian line search functionalities without QMCPACK
-- Use the setup in run.sh (see STEP 5) to use the full integrated functionalities
-  of the surrogate Hessian line search package and QMCPACK
-
 ----------------------------------- cd grid/ -----------------------------------
 STEP 0:
 Generate an energy grid to plot as a contour map
