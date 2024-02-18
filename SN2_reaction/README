@@ -1,0 +1,81 @@
+Note to @GRI:
+On Oscar:
+- Use 'loadase' to load the environment to be able to use ASE-only
+  functionalities
+- Use 'loadslurm22qmcpack' followed by 'source ~/surhes_extra/bin/activate' to
+  use surrogate Hessian line search functionalities without QMCPACK
+- Use the setup in run.sh (see STEP 5) to use the full integrated functionalities
+  of the surrogate Hessian line search package and QMCPACK
+
+----------------------------------- cd grid/ -----------------------------------
+STEP 0:
+Generate an energy grid to plot as a contour map
+- Run scf.py to calculate energies over a grid of bond lengths and bond angles
+------------------------------------ cd ../ ------------------------------------
+
+--------------------------- cd reference_eqm_and_neb ---------------------------
+STEP 1:
+Relax the initial and final SN2 reaction structures
+- Run relax.py setting the appropriate structure/file name in the last 3 lines
+  of the script
+- This script uses init.xyz and final.xyz (both unrelaxed) to seed the
+  relaxation and generates relax_init.xyz and relax_final.xyz
+
+STEP 2:
+Standardize the initial and final structures to agree with the parameterization
+- To do this, you will need to import the forward() and backward() functions
+  from parameters.py
+- Run backward(forward(pos)) for the positions obtained from the relax_init.xyz
+  and relax_final.xyz
+- The result of this is stored in init_fixed.xyz and final_fixed.xyz
+
+STEP 3:
+Run NEB
+- Run NEB using neb.py and neb_ccsd.py with whatever force constants and spring
+  constants you like
+- Make sure to set the constraint that maintains the parameterization, e.g. fix
+  the position of the N atom in the NH3 case
+- Note that different initializations of the NEB can yield different results; if
+  you call the interpolate() method, the intermediate structures are ignored and
+  the interpolation is carried out between just the initial and final structures
+- Therefore, in neb_ccsd.py, even though we read intermediate structures from
+  a previously converged DFT-NEB trajectory, the interpolation basically erases
+  the intermediate structures and restarts the NEB from an interpolated guess
+  as usual
+
+STEP 4:
+Extract NEB trajectory
+- Run extract_images_from_trajectory.py after setting the correct .traj file
+  name and number of final images to extract
+- These will be stored as structure_<i>.xyz
+- Store these in a directory labeled something like
+  'neb_seed_structures_fmax0.01' and move this to ../SN2_transition_pathway
+------------------------------------ cd ../ ------------------------------------
+
+-------------------------- cd SN2_transition_pathway ---------------------------
+STEP 5:
+Run transition pathway (a.k.a. minimum energy pathway) calculation
+- Carefully check/modify settings at in transition_pathway_automated.py
+- Submit run.sh as a batch script, i.e. 'sbatch run.sh'
+- Watch out for log files and convergence plots that are generated during/after
+  the run
+
+NOTE:
+- A new version of parameters.py has been written in which dmc_pes_job() has an
+  additional starting argument called 'dmc_enhancement_factor'
+- The value of dmc_enhancement_factor is set in transition_pathway_automated.py
+  and dmc_pes_job() is then passed as a partial function to pes_func and similar
+  arguments in the rest of the code
+- Note that an intermediate image that was previously run using the old version
+  of parameters.py will NOT recognize this newly modified function
+- If you want to include dmc_enhancement_factor for some images and not others,
+  modify the for loops in transition_pathway_automated.py to only run on those
+  images and then append log_dmc to the original log file
+- There are better ways to do this but I haven't implemented them to avoid
+  complication
+------------------------------------ cd ../ ------------------------------------
+
+STEP 6:
+Plot results
+- Run plot_parameter_vs_path.py and plot_energy_vs_path.py with appropriate
+  values filled in from preceding calculations
