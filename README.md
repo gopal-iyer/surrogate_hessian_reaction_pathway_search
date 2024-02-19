@@ -5,7 +5,7 @@ This repository includes scripts to run the surrogate Hessian subspace optimizat
 To reproduce the results in the manuscript, you will need to have access to the original [surrogate Hessian line-search](https://github.com/QMCPACK/surrogate_hessian_relax/tree/master) code (and all associated Python and QMCPACK-related packages) and add it to your `PYTHONPATH`.
 
 # Usage
-Inside the NH3_inversion and SN2_reaction directories, there are extensive README files that will guide you through the various calculations step by step.
+Inside the `NH3_inversion` and `SN2_reaction` directories, there are extensive README files that will guide you through the various calculations step by step.
 The subspace optimization algorithm can be found in directories with the suffix `_transition_pathway` and is mainly contained within `transition_pathway_automated.py` with some helper functions in `orthonormal_subspace.py` and `parameters.py`.
 The subspace optimization algorithm works as follows:
 1. Start with guess structures along a minimum-energy pathway (MEP).
