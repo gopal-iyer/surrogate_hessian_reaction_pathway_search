@@ -8,10 +8,10 @@ To reproduce the results in the manuscript, you will need to have access to the 
 Inside the `NH3_inversion` and `SN2_reaction` directories, there are extensive README files that will guide you through the various calculations step by step.
 The subspace optimization algorithm can be found in directories with the suffix `_transition_pathway` and is mainly contained within `transition_pathway_automated.py` with some helper functions in `orthonormal_subspace.py` and `parameters.py`.
 The subspace optimization algorithm works as follows:
-1. Start with guess structures along a minimum-energy pathway (MEP).
+1. Start with structures along a guess minimum-energy pathway (MEP) – here, this is obtained from a prior DFT-NEB calculation.
 2. Parameterize these structures according to some structural parameterization scheme.
 3. Compute tangents at each structure along the pathway and construct basis vectors for subspaces orthogonal to these tangents for each structure.
 4. Construct a map from structural parameter space to the path-orthogonal subspace.
-5. Perform the regular surrogate Hessian line-search within the subspace to identify the optimal structure orthogonal to the path for each original guess structure.
+5. Compute the Hessian and perform the usual surrogate Hessian line-search within the subspace to identify the optimal structure on the path for each guess structure.
 
 Once you are familiar with the algorithm, following the scripts should be straightforward.
