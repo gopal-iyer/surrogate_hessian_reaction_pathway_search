@@ -1,8 +1,8 @@
 # About
-This repository includes scripts to run the surrogate Hessian subspace optimization and saddle-point search algorithms based on the manuscript 'Force-free identification of minimum-energy pathways and transition states for stochastic electronic structure theories' by Iyer, Whelpley, Tiihonen, Kent, Krogel, and Rubenstein (2024). This repository may be updated as needed based on user feedback.
+This repository includes scripts to run the surrogate Hessian subspace optimization and saddle-point search algorithms based on the manuscript [Force-free identification of minimum-energy pathways and transition states for stochastic electronic structure theories](https://arxiv.org/abs/2402.13189) by Iyer, Whelpley, Tiihonen, Kent, Krogel, and Rubenstein (2024). This repository may be updated as needed based on user feedback.
 
 # Prerequisites
-To reproduce the results in the manuscript, you will need to have access to the original [surrogate Hessian line-search](https://github.com/QMCPACK/surrogate_hessian_relax/tree/master) code (and all associated Python and QMCPACK-related packages) and add it to your `PYTHONPATH`.
+To reproduce the results in the manuscript, you will need to have access to the original [surrogate Hessian line-search](https://github.com/QMCPACK/surrogate_hessian_relax/tree/master) code (and all associated Python and QMCPACK-related packages) and add it to your `PYTHONPATH`. In order to perform the DFT-/CCSD-NEB and thermochemistry calculations, you will also need to use the [Atomic Simulation Environment](https://wiki.fysik.dtu.dk/ase/).
 
 # Usage
 Inside the `NH3_inversion` and `SN2_reaction` directories, there are extensive README files that will guide you through the various calculations step by step.
